@@ -9,16 +9,7 @@ export function ExpensesPage() {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
 
-  const [expenses, setExpenses] = useState<Expense[]>([
-    {
-      id: crypto.randomUUID(),
-      description: "Uber do trabalho para casa",
-      category: "Transporte",
-      amountCents: 1500,
-      paidAt: "2025-02-05",
-      type: "expense",
-    },
-  ]);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
 
   function deleteExpense(id: string) {
     setExpenses((prev) => prev.filter((e) => e.id !== id));
