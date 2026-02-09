@@ -4,9 +4,11 @@ import { Card } from "../../../shared/ui/Card";
 type Props = {
   items: Expense[];
   onDelete: (id: string) => void;
+  loading?: boolean;
+  deletingId?: string | null;
 };
 
-export function ExpensesTable({ items, onDelete }: Props) {
+export function ExpensesTable({ items, onDelete, loading, deletingId }: Props) {
   return (
     <Card>
       <h3 className="text-xl mb-4">
@@ -26,6 +28,22 @@ export function ExpensesTable({ items, onDelete }: Props) {
           </thead>
 
           <tbody>
+            {loading && items.length === 0 && (
+              <tr>
+                <td className="p-3 text-zinc-500" colSpan={5}>
+                  Carregando...
+                </td>
+              </tr>
+            )}
+
+            {!loading && items.length === 0 && (
+              <tr>
+                <td className="p-3 text-zinc-500" colSpan={5}>
+                  Nenhum lançamento para este período.
+                </td>
+              </tr>
+            )}
+
             {items.map((expense) => (
               <tr key={expense.id} className="border-t">
                 <td className="p-3">{expense.description}</td>
@@ -49,9 +67,10 @@ export function ExpensesTable({ items, onDelete }: Props) {
                 <td className="p-3">
                   <button
                     onClick={() => onDelete(expense.id)}
-                    className="text-sm text-red-600 hover:text-red-800 font-medium"
+                    disabled={deletingId === expense.id}
+                    className="text-sm text-red-600 hover:text-red-800 font-medium disabled:opacity-50"
                   >
-                    Apagar
+                    {deletingId === expense.id ? "Apagando..." : "Apagar"}
                   </button>
                 </td>
               </tr>

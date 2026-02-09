@@ -1,10 +1,3 @@
-export type TransactionType = "expense" | "income";
-
-export type Expense = {
-  id: string;
-  description: string;
-  category: string;
-  amountCents: number;
-  paidAt: string;
-  type: TransactionType;
-};
+// Keep a local alias for feature-level naming.
+// The API and UI share the same shape.
+export type { TransactionType, Transaction as Expense } from "../../../shared/api/economaApi";

@@ -6,9 +6,10 @@ import type { Expense, TransactionType } from "../models/expense";
 
 type Props = {
   onSubmit: (expense: Omit<Expense, "id">) => void;
+  disabled?: boolean;
 };
 
-export function ExpenseForm({ onSubmit }: Props) {
+export function ExpenseForm({ onSubmit, disabled }: Props) {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
@@ -16,6 +17,8 @@ export function ExpenseForm({ onSubmit }: Props) {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (disabled) return;
 
     const submitter = (e.nativeEvent as SubmitEvent)
       .submitter as HTMLButtonElement;
@@ -45,18 +48,21 @@ export function ExpenseForm({ onSubmit }: Props) {
           placeholder="Descrição"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          disabled={disabled}
         />
 
         <Input
           placeholder="Categoria"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
+          disabled={disabled}
         />
 
         <Input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
+          disabled={disabled}
         />
 
         <Input
@@ -65,6 +71,7 @@ export function ExpenseForm({ onSubmit }: Props) {
           placeholder="Valor"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
+          disabled={disabled}
         />
 
         <div className="col-span-2 flex justify-center gap-4 pt-2">
@@ -72,6 +79,7 @@ export function ExpenseForm({ onSubmit }: Props) {
             type="submit"
             value="expense"
             className="bg-red-600 text-white hover:bg-red-500"
+            disabled={disabled}
           >
             Cadastrar despesa
           </Button>
@@ -80,6 +88,7 @@ export function ExpenseForm({ onSubmit }: Props) {
             type="submit"
             value="income"
             className="bg-emerald-600 text-white hover:bg-emerald-500"
+            disabled={disabled}
           >
             Cadastrar recebimento
           </Button>
